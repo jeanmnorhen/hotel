@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  AsyncStorage,
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
@@ -13,8 +14,14 @@ export default class LoguinScreen extends React.Component {
   state = {
     text: '',
     senha: '',
+    logado: 'true',
   };
 
+  _signInAsync = async () => {
+    await AsyncStorage.setItem('userToken', 'abc');
+    this.setState({logado:"false" });      
+    this.props.navigation.navigate('App');
+  };
     render() {
     return (
       
@@ -44,7 +51,7 @@ export default class LoguinScreen extends React.Component {
         </View>
 
         <View style={{height: 50, margin:5, backgroundColor: 'black'}} />
-      
+        <Button title="Sign in!" onPress={this._signInAsync} />
       </View>
     );
   }
