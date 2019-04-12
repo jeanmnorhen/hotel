@@ -8,7 +8,9 @@ import {
   View,
 } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation';
-
+import login from "../screens/auth/LoginScreen";
+import register from "../screens/auth/RegistroScreen";
+import recuperar from "../screens/auth/RecuperarSenhaScreen";
 class SignInScreen extends React.Component {
   static navigationOptions = {
     title: 'Please sign in',
@@ -106,6 +108,7 @@ const styles = StyleSheet.create({
   },
 });
 
+const MeusStack = createStackNavigator({ login: login, registrar: register ,recuperar: recuperar });
 const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
@@ -113,7 +116,7 @@ export default createAppContainer(createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
-    Auth: AuthStack,
+    Auth: MeusStack,
   },
   {
     initialRouteName: 'AuthLoading',
