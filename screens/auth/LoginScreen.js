@@ -20,7 +20,7 @@ export default class LoguinScreen extends React.Component {
 
   _signInAsync = async () => {
     await AsyncStorage.setItem('userToken', 'abc');
-    this.setState({logado:"false" });      
+    this.setState({logado:"true" });      
     this.props.navigation.navigate('App');
   };
     render() {
@@ -32,19 +32,20 @@ export default class LoguinScreen extends React.Component {
         justifyContent: 'center',
         alignItems: 'stretch',
       }}>
-        <View style={{ height: 50,margin:5}}>
-          <Text style={styles.getStartedText} label={this.state.logado}></Text>
+        <View style={{ height: 50,margin:5, 
+        alignItems: 'center'} }>
+          <Text style={styles.getStartedText} >Autentificaçaa</Text>
         </View>
         <View style={{ height: 50,margin:5}}>
         <TextInput
-        label='Email'
+        label='E-mail'
         value={this.state.text}
         mode="outlined"
         onChangeText={text => this.setState({ text })}
       />
         
       </View>
-        <View style={{height: 50, margin:5, backgroundColor: 'skyblue'}}>
+        <View style={{height: 50, margin:5}}>
         <TextInput
         label='Senha'
         value={this.state.senha}
@@ -53,7 +54,7 @@ export default class LoguinScreen extends React.Component {
       />
         </View>
 
-        <View style={{height: 50, margin:5, backgroundColor: 'black'}} />
+        <View style={{height: 50, margin:5}} />
         <Button title="Sign in!" onPress={this._signInAsync} />
       </View>
     );
