@@ -17,22 +17,34 @@ export default class LoguinScreen extends React.Component {
 
     render() {
     return (
-      <View style={styles.container}>
-       <View style={styles.contentContainer}>               
-            <Text style={styles.getStartedText}>Autenticação</Text>
-            <TextInput
-            label='Email'
-            value={this.state.text}
-            mode="outlined"
-            onChangeText={text => this.setState({ text })}
-          />
-            <TextInput
-            label='Senha'
-            value={this.state.senha}
-            mode="outlined"
-            onChangeText={senha => this.setState({ senha })}
-          />
-       </View>
+      
+      <View style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+      }}>
+        <View style={{ height: 50,margin:5, backgroundColor: 'red'}}>
+        <Text style={styles.getStartedText}>Autenticação</Text>
+        <TextInput
+        label='Email'
+        value={this.state.text}
+        mode="outlined"
+        onChangeText={text => this.setState({ text })}
+      />
+        
+      </View>
+        <View style={{height: 50, margin:5, backgroundColor: 'skyblue'}}>
+        <TextInput
+        label='Senha'
+        value={this.state.senha}
+        mode="outlined"
+        onChangeText={senha => this.setState({ senha })}
+      />
+        </View>
+
+        <View style={{height: 50, margin:5, backgroundColor: 'black'}} />
+      
       </View>
     );
   }
