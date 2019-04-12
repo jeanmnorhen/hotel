@@ -15,7 +15,7 @@ export default class LoguinScreen extends React.Component {
   state = {
     text: '',
     senha: '',
-    logado: 'true',
+    logado: 'false',
   };
 
   _signInAsync = async () => {
@@ -32,8 +32,10 @@ export default class LoguinScreen extends React.Component {
         justifyContent: 'center',
         alignItems: 'stretch',
       }}>
-        <View style={{ height: 50,margin:5, backgroundColor: 'red'}}>
-        <Text style={styles.getStartedText}>Autenticação</Text>
+        <View style={{ height: 50,margin:5}}>
+          <Text style={styles.getStartedText} label={this.state.logado}></Text>
+        </View>
+        <View style={{ height: 50,margin:5}}>
         <TextInput
         label='Email'
         value={this.state.text}
