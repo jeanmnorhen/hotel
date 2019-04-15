@@ -87,22 +87,32 @@ export default class LoguinScreen extends React.Component {
         />
         </View>
 
-        <View style={{backgroundColor: "red",
-          height: 50,  width: 350,  
+        <View style={{
+          width: 350,  
           alignItems: 'stretch',
+          marginTop:10,
           }} >
-        <Button style={{
-          marginTop:10,
-          }} 
-          title="Entrar!" onPress={this.onLoginPress} />        
-        <Button style={{
-          marginTop:10,
-          }} 
+           <View style={{
+          height: 50,
+          margin:5,
+          }}>
+        <Button 
+          title="Entrar!" onPress={this.onLoginPress} />    
+           </View>  
+           <View style={{
+          height: 50,
+          margin:5,
+          }}>  
+        <Button 
           title="Registrar" onPress={this.onLoginPress} />
-        <Button style={{
-          marginTop:10,
-          }} 
+          </View>
+          <View style={{
+          height: 50,
+          margin:5,
+          }}>  
+        <Button
           title="Esqueci a senha" onPress={this.onLoginPress} />
+          </View>
            </View>
       </View>
     );
