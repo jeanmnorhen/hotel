@@ -8,16 +8,38 @@ import {
   Button,
   AsyncStorage,
   View,
+  Alert,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import * as firebase from 'firebase';
+const firebaseConfig = {
+  apiKey: "AIzaSyC_qh-vistR3BZh_CZS7YeNXYtC645UDPo",
+    authDomain: "automacaohotelcristal.firebaseapp.com",
+    databaseURL: "https://automacaohotelcristal.firebaseio.com",
+    projectId: "automacaohotelcristal",
+    storageBucket: "automacaohotelcristal.appspot.com",
+    messagingSenderId: "356878374392"
+};
 
+firebase.initializeApp(firebaseConfig);
 export default class LoguinScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Por favor identifique-se',
+  };
   state = {
-    text: '',
+    email: '',
     senha: '',
     logado: 'false',
   };
 
+  onLoginPress = () => {
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.senha)
+    .then(()=>{
+      this.props.navigation.navigate('App');      
+    },(error)=>{
+      Alert.alert(error.message);
+    });
+  }
   _signInAsync = async () => {
     await AsyncStorage.setItem('userToken', 'abc');
     this.setState({logado:"true" });      
@@ -30,32 +52,58 @@ export default class LoguinScreen extends React.Component {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'stretch',
+        alignItems: 'center',
       }}>
-        <View style={{ height: 50,margin:5, 
-        alignItems: 'center'} }>
-          <Text style={styles.getStartedText} >Autentificaçaa</Text>
+        <View style={{ 
+          height: 50,
+          margin:5, 
+          width: 400,
+        }}>
+          <Text>Autentificação</Text>
         </View>
-        <View style={{ height: 50,margin:5}}>
+        <View style={{ 
+          height: 50,
+          margin:5,
+          width: 400,
+          }}>
         <TextInput
         label='E-mail'
-        value={this.state.text}
+        value={this.state.email}
         mode="outlined"
-        onChangeText={text => this.setState({ text })}
+        onChangeText={email => this.setState({ email })}
       />
         
       </View>
-        <View style={{height: 50, margin:5}}>
+        <View style={{
+          height: 50,
+          margin:5,
+          width: 400,
+          }}>
         <TextInput
         label='Senha'
         value={this.state.senha}
         mode="outlined"
         onChangeText={senha => this.setState({ senha })}
-      />
+        />
         </View>
 
-        <View style={{height: 50, margin:5}} />
-        <Button title="Sign in!" onPress={this._signInAsync} />
+        <View style={{backgroundColor: "red",
+          height: 50,  width: 350,  
+          alignItems: 'stretch',
+          }} >
+        <Button style={{
+          marginTop:10,
+          }} 
+          title="Entrar!" onPress={this.onLoginPress} />        
+        <Button style={{
+          marginTop:10,
+          }} 
+          title="Registrar" onPress={this.onLoginPress} />
+        <Button style={{
+          marginTop:10,
+          }} 
+          title="Esqueci a senha" onPress={this.onLoginPress} />
+           </View>
       </View>
     );
   }

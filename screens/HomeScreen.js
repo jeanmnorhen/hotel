@@ -1,9 +1,12 @@
 import React from 'react';
 import {
   Image,
+  AsyncStorage,
   Platform,
   ScrollView,
   StyleSheet,
+  Button,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -16,7 +19,10 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
-
+  _signOutAsync = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Auth');
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -35,15 +41,13 @@ export default class HomeScreen extends React.Component {
           <View style={styles.getStartedContainer}>
             {this._maybeRenderDevelopmentModeWarning()}
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
+         
 
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
+            
+      <View style={styles.container}>
+        <Button title="I'm done, sign me out" onPress={this._signOutAsync} />
+        <StatusBar barStyle="default" />
+      </View>
           </View>
 
           <View style={styles.helpContainer}>
