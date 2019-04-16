@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  Alert,
   View,
 } from 'react-native';
 
@@ -21,13 +22,16 @@ export default class RegistroScreen extends React.Component {
     repitaSenha: '',
   };
   onSignupPress = () => {
-    if (this.state.password !== this.state.passwordConfirm) {
-        Alert.alert("Passwords do not match");
+    if (this.state.senha !== this.state.repitaSenha) {
+        Alert.alert("Senha e Senha de confirmação não são iguais");
         return;
     }
 
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(() => { }, (error) => { Alert.alert(error.message); });
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.senha)
+        .then(() => {{
+          Alert.alert("Registro efetuado com sucesso"); 
+          this.props.navigation.navigate('App');
+        }}, (error) => { Alert.alert(error.message); });
 }
 
     render() {
@@ -55,9 +59,9 @@ export default class RegistroScreen extends React.Component {
         <View style={styles.containerInput}>
           <TextInput
             label='Repita a senha'
-            value={this.state.senha}
+            value={this.state.repitaSenha}
             mode="outlined"
-            onChangeText={senha => this.setState({ repitaSenha })}
+            onChangeText={repitaSenha => this.setState({ repitaSenha })}
           />
         </View>
 

@@ -5,10 +5,13 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  Alert,
   View,
 } from 'react-native';
 
 
+import { TextInput, Button } from 'react-native-paper';
+import * as firebase from 'firebase';
 export default class RecuperarSenhaScreen extends React.Component {
   
   static navigationOptions = {
@@ -19,9 +22,10 @@ export default class RecuperarSenhaScreen extends React.Component {
   };
   onResetPasswordPress = () => {
     firebase.auth().sendPasswordResetEmail(this.state.email)
-        .then(() => {
+        .then(() => {{
             Alert.alert("E-mail de recuperação enviado com sucesso.");
-        }, (error) => {
+            this.props.navigation.navigate('Auth');
+}        }, (error) => {
             Alert.alert(error.message);
         });
 }
@@ -41,7 +45,7 @@ export default class RecuperarSenhaScreen extends React.Component {
         </View>
         
         <View style={styles.containerBotao}>
-          <Button style={styles.botao} mode="outlined"  onPress={this.onLoginPress} >
+          <Button style={styles.botao} mode="outlined"  onPress={this.onResetPasswordPress} >
           Enviar solicitação
           </Button>
 

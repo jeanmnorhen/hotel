@@ -15,12 +15,13 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
+import * as firebase from 'firebase';
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
   _signOutAsync = async () => {
-    await AsyncStorage.clear();
+    firebase.auth().signOut();
     this.props.navigation.navigate('Auth');
   };
   render() {
@@ -46,7 +47,6 @@ export default class HomeScreen extends React.Component {
             
       <View style={styles.container}>
         <Button title="I'm done, sign me out" onPress={this._signOutAsync} />
-        <StatusBar barStyle="default" />
       </View>
           </View>
 
