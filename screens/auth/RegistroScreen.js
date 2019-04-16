@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 
+import { TextInput, Button } from 'react-native-paper';
 import * as firebase from 'firebase';
 export default class RegistroScreen extends React.Component {
   static navigationOptions = {
@@ -19,12 +20,20 @@ export default class RegistroScreen extends React.Component {
     senha: '',
     repitaSenha: '',
   };
+  onSignupPress = () => {
+    if (this.state.password !== this.state.passwordConfirm) {
+        Alert.alert("Passwords do not match");
+        return;
+    }
+
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(() => { }, (error) => { Alert.alert(error.message); });
+}
+
     render() {
     return (
       
       <View style={styles.container}>
-        <Text>Autentificação</Text>
-
         <View style={styles.containerInput}>
           <TextInput
             label='E-mail'
@@ -53,7 +62,7 @@ export default class RegistroScreen extends React.Component {
         </View>
 
         <View style={styles.containerBotao}>
-          <Button style={styles.botao} mode="outlined"  onPress={this.onRegistrarPress} >
+          <Button style={styles.botao} mode="outlined"  onPress={this.onSignupPress} >
           Registrar
           </Button>
           
@@ -73,7 +82,7 @@ const styles = StyleSheet.create({
   },
   containerInput: {
     height: 50,
-    margin: 5,
+    margin: 15,
     width: 400,
   },
   containerBotao: {

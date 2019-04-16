@@ -49,8 +49,6 @@ export default class LoguinScreen extends React.Component {
     return (
 
       <View style={styles.container}>
-        <Text>Autentificação</Text>
-
         <View style={styles.containerInput}>
           <TextInput
             label='E-mail'
