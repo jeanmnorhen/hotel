@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation';
 import login from "../screens/auth/LoginScreen";
-import register from "../screens/auth/RegistroScreen";
+import Register from "../screens/auth/RegistroScreen";
 import recuperar from "../screens/auth/RecuperarSenhaScreen";
 import homeScreen from '../screens/HomeScreen';
 import main from './MainTabNavigator';
@@ -111,12 +111,14 @@ const styles = StyleSheet.create({
 });
 
 const MainStack = createStackNavigator({ mainScreen: main });
-const AuthStack  = createStackNavigator({ login: login, registrar: register ,recuperar: recuperar });
+const AuthStack  = createStackNavigator({ login: login, registrar: Register ,recuperar: recuperar });
 
 export default createAppContainer(createSwitchNavigator(
   {
     App: MainStack,
     Auth: AuthStack,
+    registrar: AuthStack,
+    recuperar: AuthStack,
   },
   {
     initialRouteName: 'Auth',
