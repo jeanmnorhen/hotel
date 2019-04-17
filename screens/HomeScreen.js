@@ -1,12 +1,9 @@
 import React from 'react';
 import {
   Image,
-  AsyncStorage,
   Platform,
   ScrollView,
   StyleSheet,
-  Button,
-  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -15,46 +12,46 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
-import * as firebase from 'firebase';
+import {firebaseApp} from '../components/firebaseConfig';
+import { Searchbar, List } from 'react-native-paper';
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
-  _signOutAsync = async () => {
-    firebase.auth().signOut();
-    this.props.navigation.navigate('Auth');
+  state = {
+    firstQuery: '',
   };
+  componentWillMount() {
+    const refQuartos = firebaseApp.database().ref('quartos').on('value', (data) => {
+      console.log(data.toJSON());
+  }
+).then(() => {
+  console.log('INSERTED !');
+}).catch((error) => {
+  console.log(error);
+})
+  }
+    
   render() {
+    const { firstQuery } = this.state;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
+            <Searchbar
+              placeholder="Search"
+              onChangeText={query => { this.setState({ firstQuery: query }); }}
+              value={firstQuery}
             />
           </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-         
-
-            
-      <View style={styles.container}>
-        <Button title="I'm done, sign me out" onPress={this._signOutAsync} />
-      </View>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
+          {
+          
+        }
+        <List.Item
+            title="First Item"
+            description="Item description"
+            left={props => <List.Icon {...props} icon="folder" />}
+          />
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
@@ -116,6 +113,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 30,
+    backgroundColor: 'pink',
   },
   welcomeContainer: {
     alignItems: 'center',

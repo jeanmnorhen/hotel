@@ -1,21 +1,17 @@
 import React from 'react';
 import {
-  Image,
   StyleSheet,
   Text,
-  AsyncStorage,
   View,
   Alert,
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import {firebaseApp} from '../../components/firebaseConfig';
-export default class LoguinScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Por favor identifique-se',
-  };
+export default class FormClientes extends React.Component {
   state = {
+    nome:'',
+    cpf:'',
     email: '',
-    senha: '',
   };
   onRecuperarrPress = () => {
     this.props.navigation.navigate('recuperar');
@@ -24,50 +20,48 @@ export default class LoguinScreen extends React.Component {
     this.props.navigation.navigate('registrar');
   }
   onLoginPress = () => {
-    firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.senha)
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.senha)
       .then(() => {
         this.props.navigation.navigate('App');
       }, (error) => {
         Alert.alert(error.message);
       });
   }
-  _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App');
-  };
   render() {
     return (
 
       <View style={styles.container}>
         <View style={styles.containerInput}>
           <TextInput
-            label='E-mail'
+            label='Nome'
+            value={this.state.nome}
+            mode="outlined"
+            onChangeText={nome => this.setState({ nome })}
+          />
+        </View>
+
+        <View style={styles.containerInput}>
+          <TextInput
+            label='Cpf'
+            value={this.state.senha}
+            mode="outlined"
+            onChangeText={cpf => this.setState({ cpf })}
+          />
+        </View>
+
+        <View style={styles.containerInput}>
+          <TextInput
+            label='e-mail'
             value={this.state.email}
             mode="outlined"
             onChangeText={email => this.setState({ email })}
           />
         </View>
 
-        <View style={styles.containerInput}>
-          <TextInput
-            label='Senha'
-            value={this.state.senha}
-            mode="outlined"
-            onChangeText={senha => this.setState({ senha })}
-          />
-        </View>
-
         <View style={styles.containerBotao}>
           <Button style={styles.botao} mode="outlined"  onPress={this.onLoginPress} >
-          Entrar
+          Cadastrar
           </Button>
-          <Button style={styles.botao} mode="outlined"  onPress={this.onRegistrarPress} >
-          Registrar
-          </Button>
-          <Button style={styles.botao} mode="outlined"  onPress={this.onRecuperarrPress}  >
-          Esqueci minha senha
-          </Button>
-
         </View>
       </View>
     );
@@ -94,11 +88,4 @@ const styles = StyleSheet.create({
     height: 50,
     margin: 5,
 },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
 });
