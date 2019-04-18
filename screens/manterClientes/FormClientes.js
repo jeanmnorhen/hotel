@@ -7,27 +7,22 @@ import {
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import {firebaseApp} from '../../components/firebaseConfig';
+
 export default class FormClientes extends React.Component {
   state = {
     nome:'',
     cpf:'',
     email: '',
   };
+
   onRecuperarrPress = () => {
     this.props.navigation.navigate('recuperar');
   }
   onRegistrarPress = () => {
     this.props.navigation.navigate('registrar');
   }
-  onLoginPress = () => {
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.senha)
-      .then(() => {
-        this.props.navigation.navigate('App');
-      }, (error) => {
-        Alert.alert(error.message);
-      });
-  }
-  render() {
+
+ render() {
     return (
 
       <View style={styles.container}>
@@ -43,7 +38,7 @@ export default class FormClientes extends React.Component {
         <View style={styles.containerInput}>
           <TextInput
             label='Cpf'
-            value={this.state.senha}
+            value={this.state.cpf}
             mode="outlined"
             onChangeText={cpf => this.setState({ cpf })}
           />
@@ -59,7 +54,7 @@ export default class FormClientes extends React.Component {
         </View>
 
         <View style={styles.containerBotao}>
-          <Button style={styles.botao} mode="outlined"  onPress={this.onLoginPress} >
+          <Button style={styles.botao} mode="outlined"   >
           Cadastrar
           </Button>
         </View>

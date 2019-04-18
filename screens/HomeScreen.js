@@ -5,7 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  FlatList,
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
@@ -14,44 +14,55 @@ import { MonoText } from '../components/StyledText';
 
 import {firebaseApp} from '../components/firebaseConfig';
 import { Searchbar, List } from 'react-native-paper';
+const refRoot  = firebaseApp.database().ref();
+const refClientes =refRoot.child('Clientes');
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
   state = {
-    firstQuery: '',
+    clientes : [],
+    novoClienteNome: '',
+    novoClienteCpf: '',
+    novoClienteEmail: '',
+
   };
-  componentWillMount() {
-    const refQuartos = firebaseApp.database().ref('quartos').on('value', (data) => {
-      console.log(data.toJSON());
+  componentDidMount(){
+    refClientes.on('value',(childSnapshot)=>{
+      const clientesTemp =[];
+      childSnapshot.forEach((cli)=>{
+        clientesTemp.push({
+          key:cli.key,
+          nome: cli.toJSON().nome
+        });
+        this.setState({
+          clientes:clientesTemp,  
+        }); 
+      });
+    });
   }
-).then(() => {
-  console.log('INSERTED !');
-}).catch((error) => {
-  console.log(error);
-})
-  }
-    
   render() {
-    const { firstQuery } = this.state;
+   
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <Searchbar
-              placeholder="Search"
-              onChangeText={query => { this.setState({ firstQuery: query }); }}
-              value={firstQuery}
-            />
+           <FlatList
+              data={this.state.clientes}
+              renderItem={({item, index})=>{
+                return(
+                  <Text style={{fontSize:20,fontWeight:'bold',margin:10}}>
+                  {item.nome}
+                  </Text>
+                )
+              }
+            }
+
+           >
+
+           </FlatList>
           </View>
-          {
-          
-        }
-        <List.Item
-            title="First Item"
-            description="Item description"
-            left={props => <List.Icon {...props} icon="folder" />}
-          />
+         
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
