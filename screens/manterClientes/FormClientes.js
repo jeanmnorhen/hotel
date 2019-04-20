@@ -7,19 +7,40 @@ import {
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import {firebaseApp} from '../../components/firebaseConfig';
-
+const refRoot  = firebaseApp.database().ref();
+const refClientes =refRoot.child('Clientes/');
 export default class FormClientes extends React.Component {
   state = {
     nome:'',
     cpf:'',
     email: '',
+    Novonome:'',
+    Novocpf:'',
+    Novoemail: '',
+  
   };
 
-  onRecuperarrPress = () => {
-    this.props.navigation.navigate('recuperar');
-  }
-  onRegistrarPress = () => {
-    this.props.navigation.navigate('registrar');
+  onAddClientePress = () => {
+    if(this.state.Novonome.trim()==''){
+      alert('Nome não pode ser vazio');
+      return;
+    }
+    if(this.state.Novocpf.trim()==''){
+      alert('Cpf não pode ser vazio');
+      return;
+    }
+    if(this.state.Novoemail.trim()==''){
+      alert('E-mail não pode ser vazio');
+      return;
+    }
+    refClientes.push({
+      nome: this.state.Novonome,
+      cpf: this.state.Novocpf,
+      email: this.state.Novoemail,
+    })
+    refClientes.on('child_added', function(data) {
+      alert('Cliente adicionado com sucesso');
+    });
   }
 
  render() {
@@ -29,32 +50,32 @@ export default class FormClientes extends React.Component {
         <View style={styles.containerInput}>
           <TextInput
             label='Nome'
-            value={this.state.nome}
+            value={this.state.Novonome}
             mode="outlined"
-            onChangeText={nome => this.setState({ nome })}
+            onChangeText={Novonome => this.setState({ Novonome: Novonome })}
           />
         </View>
 
         <View style={styles.containerInput}>
           <TextInput
             label='Cpf'
-            value={this.state.cpf}
+            value={this.state.Novocpf}
             mode="outlined"
-            onChangeText={cpf => this.setState({ cpf })}
+            onChangeText={Novocpf => this.setState({ Novocpf: Novocpf })}
           />
         </View>
 
         <View style={styles.containerInput}>
           <TextInput
             label='e-mail'
-            value={this.state.email}
+            value={this.state.Novoemail}
             mode="outlined"
-            onChangeText={email => this.setState({ email })}
+            onChangeText={Novoemail => this.setState({Novoemail: Novoemail })}
           />
         </View>
 
         <View style={styles.containerBotao}>
-          <Button style={styles.botao} mode="outlined"   >
+          <Button style={styles.botao} mode="outlined" onPress={this.onAddClientePress}  >
           Cadastrar
           </Button>
         </View>

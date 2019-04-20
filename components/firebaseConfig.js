@@ -5,7 +5,7 @@ const firebaseConfig = {
   databaseURL: "https://automacaohotelcristal.firebaseio.com",
   projectId: "automacaohotelcristal",
   storageBucket: "automacaohotelcristal.appspot.com",
-  messagingSenderId: "356878374392"
+  messagingSenderId: "356878374392",
 };
 
 export const firebaseApp =firebase.initializeApp(firebaseConfig);

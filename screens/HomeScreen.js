@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   Image,
   Platform,
@@ -13,9 +13,8 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 
 import {firebaseApp} from '../components/firebaseConfig';
-import { Searchbar, List } from 'react-native-paper';
-const refRoot  = firebaseApp.database().ref();
-const refClientes =refRoot.child('Clientes');
+import { Avatar, Button, Card, Title, Paragraph , List } from 'react-native-paper';
+const refRoot  = firebaseApp.database();
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -27,13 +26,17 @@ export default class HomeScreen extends React.Component {
     novoClienteEmail: '',
 
   };
-  componentDidMount(){
-    refClientes.on('value',(childSnapshot)=>{
+  atualizarLista(){
+    
+refRoot.child('funcionarios/').once('value',(childSnapshot)=>{
+      console.log(childSnapshot.val())
       const clientesTemp =[];
       childSnapshot.forEach((cli)=>{
         clientesTemp.push({
           key:cli.key,
-          nome: cli.toJSON().nome
+          nome: cli.toJSON().nome,
+          cpf: cli.toJSON().cpf,
+          email: cli.toJSON().email
         });
         this.setState({
           clientes:clientesTemp,  
@@ -41,26 +44,35 @@ export default class HomeScreen extends React.Component {
       });
     });
   }
+  readUserData() {
+    firebaseApp.database().ref('funcionarios/').once('value', function (snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        console.log(childSnapshot.val())
+      })
+})}
   render() {
    
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
+          {
+            this.readUserData()
+          }
            <FlatList
               data={this.state.clientes}
               renderItem={({item, index})=>{
                 return(
-                  <Text style={{fontSize:20,fontWeight:'bold',margin:10}}>
-                  {item.nome}
-                  </Text>
+                  <View style={styles.containerCard}>
+                    <Card>
+                    <Card.Title title={item.nome} subtitle={"Cpf " + item.cpf + " E-mail"+ item.nome} left={(props) => <Avatar.Icon {...props} icon="folder" />} />
+                    </Card>
+                  </View>
                 )
               }
             }
 
-           >
-
-           </FlatList>
+           ></FlatList>
           </View>
          
         </ScrollView>
@@ -109,11 +121,20 @@ export default class HomeScreen extends React.Component {
     );
   };
 }
-
+{
+  const highestTimeoutId = setTimeout(() => ';');
+for (let i = 0; i < highestTimeoutId; i++) {
+    clearTimeout(i); 
+}
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  }, 
+  containerCard: {
+    height:500,
+    width: 400,
   },
   developmentModeText: {
     marginBottom: 20,
