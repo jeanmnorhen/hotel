@@ -15,6 +15,7 @@ import {firebaseApp} from '../components/firebaseConfig';
 import { Avatar, Button, Card  } from 'react-native-paper';
 import QuartoLivre from '../components/homeComponentes/QuartoLivre';
 import ClietesList from '../components/homeComponentes/ClietesList';
+import QuartoAlugado from '../components/homeComponentes/QuartoAlugado';
 const refRoot  = firebaseApp.database();
 
 export default class HomeScreen extends React.Component {
@@ -135,11 +136,16 @@ refRoot.child('funcionarios/').once('value',(childSnapshot)=>{
               
            <View style={styles.containerCard}>
               <ClietesList nome="jean" cpf='2024324234' email='jeansijk@gmail.com'  />
-              <ClietesList nome="joao" cpf='2024324234' email='jeansijk@gmail.com'  />
-              <ClietesList nome="maria" cpf='2024324234' email='jeansijk@gmail.com'  />
-              <ClietesList nome="jose" cpf='2024324234' email='jeansijk@gmail.com'  />
+              
+              
+           <View style={styles.containerCard}>
               <ClietesList nome="tiaso" cpf='2024324234' email='jeansijk@gmail.com'  />
+              </View>
+              
+           <View style={styles.containerCard}>
               <ClietesList nome="outro" cpf='2024324234' email='jeansijk@gmail.com'  />
+              </View>
+           <View style={styles.containerCard}></View>
            </View>
 
               <TouchableHighlight
