@@ -37,7 +37,8 @@ export default class FormClientes extends React.Component {
       nome: this.state.Novonome,
       cpf: this.state.Novocpf,
       email: this.state.Novoemail,
-    }).on('child_added', function(data) {
+    })
+    refClientes.on('child_added', function(data) {
       alert('Cliente adicionado com sucesso');
     });
   }

@@ -1,20 +1,20 @@
 import * as React from 'react';
 import {
-  Image,
+  TouchableHighlight,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
+  Modal,
   FlatList,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
-
-import { MonoText } from '../components/StyledText';
 
 import {firebaseApp} from '../components/firebaseConfig';
-import { Avatar, Button, Card, Title, Paragraph , List } from 'react-native-paper';
+      
+import { Avatar, Button, Card  } from 'react-native-paper';
 import QuartoLivre from '../components/homeComponentes/QuartoLivre';
+import ClietesList from '../components/homeComponentes/ClietesList';
 const refRoot  = firebaseApp.database();
 
 export default class HomeScreen extends React.Component {
@@ -26,8 +26,15 @@ export default class HomeScreen extends React.Component {
     novoClienteNome: '',
     novoClienteCpf: '',
     novoClienteEmail: '',
-
+    listaItens: [],
+    modalVisible: false,
   };
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
+
   atualizarLista(){
     
 refRoot.child('funcionarios/').once('value',(childSnapshot)=>{
@@ -54,6 +61,7 @@ refRoot.child('funcionarios/').once('value',(childSnapshot)=>{
 })}
   render() {
    
+    const { visible } = this.state;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -73,7 +81,14 @@ refRoot.child('funcionarios/').once('value',(childSnapshot)=>{
             }
 
            ></FlatList>
-           
+             {this.state.listaItens.map((item, i) => {
+                    return (<View key={i}>
+                        <TouchableOpacity >
+                        <Itens key={item.id} item={item} />
+                        </TouchableOpacity>
+                    </View>)
+                })}
+
            <View style={styles.containerCard}>
               <QuartoLivre status="Livre" numeroQuarto='101' valorDiaria='100,00'  />
            </View>
@@ -108,58 +123,49 @@ refRoot.child('funcionarios/').once('value',(childSnapshot)=>{
               <QuartoLivre status="Livre" numeroQuarto='202' valorDiaria='100,00'  />
            </View>
           </View>
-         
+          <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
+              
+           <View style={styles.containerCard}>
+              <ClietesList nome="jean" cpf='2024324234' email='jeansijk@gmail.com'  />
+              <ClietesList nome="joao" cpf='2024324234' email='jeansijk@gmail.com'  />
+              <ClietesList nome="maria" cpf='2024324234' email='jeansijk@gmail.com'  />
+              <ClietesList nome="jose" cpf='2024324234' email='jeansijk@gmail.com'  />
+              <ClietesList nome="tiaso" cpf='2024324234' email='jeansijk@gmail.com'  />
+              <ClietesList nome="outro" cpf='2024324234' email='jeansijk@gmail.com'  />
+           </View>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <Button
+          onPress={() => {
+            this.setModalVisible(true);
+          }}>
+          <Text>Show Modal</Text>
+        </Button>
         </ScrollView>
 
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
       </View>
+      
     );
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
 
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
-}
-{
-  const highestTimeoutId = setTimeout(() => ';');
-for (let i = 0; i < highestTimeoutId; i++) {
-    clearTimeout(i); 
-}
 }
 const styles = StyleSheet.create({
   container: {
@@ -168,6 +174,7 @@ const styles = StyleSheet.create({
   }, 
   containerCard: {
     width: 400,
+    marginBottom:20,
   },
   developmentModeText: {
     marginBottom: 20,
