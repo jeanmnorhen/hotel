@@ -11,7 +11,6 @@ export default class LinksScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
       <FormClientes />
-      <FormQuartos></FormQuartos>
       </ScrollView>
     );
   }

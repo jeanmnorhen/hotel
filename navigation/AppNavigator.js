@@ -121,6 +121,6 @@ export default createAppContainer(createSwitchNavigator(
     recuperar: AuthStack,
   },
   {
-    initialRouteName: 'App',//VOLTAR PARA AUTH DEPOIS
+    initialRouteName: 'Auth',//VOLTAR PARA AUTH DEPOIS
   }
 ));

@@ -21,8 +21,7 @@ export default class ClienteList extends React.Component {
             <Card>
                 <Card.Title
                     title={"nome: "+nome}
-                    subtitle={'cpf: '+ cpf }
-                    
+                    subtitle={'cpf: '+ cpf +'e-mail'+email}                    
                 />
             </Card>
         );
