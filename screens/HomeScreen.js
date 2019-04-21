@@ -14,7 +14,9 @@ import { MonoText } from '../components/StyledText';
 
 import {firebaseApp} from '../components/firebaseConfig';
 import { Avatar, Button, Card, Title, Paragraph , List } from 'react-native-paper';
+import QuartoLivre from '../components/homeComponentes/QuartoLivre';
 const refRoot  = firebaseApp.database();
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -56,9 +58,7 @@ refRoot.child('funcionarios/').once('value',(childSnapshot)=>{
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-          {
-            this.readUserData()
-          }
+     
            <FlatList
               data={this.state.clientes}
               renderItem={({item, index})=>{
@@ -73,6 +73,40 @@ refRoot.child('funcionarios/').once('value',(childSnapshot)=>{
             }
 
            ></FlatList>
+           
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='101' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='102' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='103' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='104' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='105' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='106' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='107' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='108' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='109' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='201' valorDiaria='100,00'  />
+           </View>
+           <View style={styles.containerCard}>
+              <QuartoLivre status="Livre" numeroQuarto='202' valorDiaria='100,00'  />
+           </View>
           </View>
          
         </ScrollView>
@@ -133,7 +167,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   }, 
   containerCard: {
-    height:500,
     width: 400,
   },
   developmentModeText: {

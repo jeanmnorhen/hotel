@@ -8,7 +8,8 @@ import {
 import { TextInput, Button } from 'react-native-paper';
 import {firebaseApp} from '../../components/firebaseConfig';
 const refRoot  = firebaseApp.database().ref();
-const refClientes =refRoot.child('Clientes/');
+const refClientes = refRoot.child('Clientes/');
+
 export default class FormClientes extends React.Component {
   state = {
     nome:'',
@@ -16,8 +17,7 @@ export default class FormClientes extends React.Component {
     email: '',
     Novonome:'',
     Novocpf:'',
-    Novoemail: '',
-  
+    Novoemail: '',  
   };
 
   onAddClientePress = () => {
@@ -37,22 +37,20 @@ export default class FormClientes extends React.Component {
       nome: this.state.Novonome,
       cpf: this.state.Novocpf,
       email: this.state.Novoemail,
-    })
-    refClientes.on('child_added', function(data) {
+    }).on('child_added', function(data) {
       alert('Cliente adicionado com sucesso');
     });
   }
 
  render() {
     return (
-
       <View style={styles.container}>
         <View style={styles.containerInput}>
           <TextInput
             label='Nome'
             value={this.state.Novonome}
             mode="outlined"
-            onChangeText={Novonome => this.setState({ Novonome: Novonome })}
+            onChangeText={Novonome => this.setState({ Novonome })}
           />
         </View>
 
@@ -61,7 +59,7 @@ export default class FormClientes extends React.Component {
             label='Cpf'
             value={this.state.Novocpf}
             mode="outlined"
-            onChangeText={Novocpf => this.setState({ Novocpf: Novocpf })}
+            onChangeText={Novocpf => this.setState({ Novocpf })}
           />
         </View>
 
@@ -70,7 +68,7 @@ export default class FormClientes extends React.Component {
             label='e-mail'
             value={this.state.Novoemail}
             mode="outlined"
-            onChangeText={Novoemail => this.setState({Novoemail: Novoemail })}
+            onChangeText={Novoemail => this.setState({ Novoemail })}
           />
         </View>
 

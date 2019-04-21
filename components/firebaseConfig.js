@@ -6,6 +6,7 @@ const firebaseConfig = {
   projectId: "automacaohotelcristal",
   storageBucket: "automacaohotelcristal.appspot.com",
   messagingSenderId: "356878374392",
+  persistence: true,
 };
 
 export const firebaseApp =firebase.initializeApp(firebaseConfig);
